@@ -1,0 +1,51 @@
+name: Build APK
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+  issues: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Assemble uploaded parts
+        run: |
+          shopt -s nullglob
+          for z in *.zip; do echo "unzip $z"; unzip -oq "$z"; done
+          for d in 1-app *-fonts; do
+            if [ -d "$d" ]; then echo "merge $d"; cp -r "$d"/. .; fi
+          done
+          n=$(ls assets/www/fonts | wc -l)
+          echo "fonts: $n"
+          test "$n" = 608
+          test -f assets/www/data.js
+      - name: Build
+        env:
+          VC: ${{ github.run_number }}
+          VN: 1.1.${{ github.run_number }}
+        run: |
+          set -o pipefail
+          bash scripts/build.sh 2>&1 | tee build.log
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v1.1.${{ github.run_number }}" build/Mukth.apk \
+            --title "مُكْث 1.1.${{ github.run_number }}" \
+            --notes "نزِّل الملف Mukth.apk وثبِّته على هاتف أندرويد (7.0 فما فوق)." --latest
+      - name: Report failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "Build failed (run ${{ github.run_number }})" --body "$(printf '```\n%s\n```' "$( (ls; echo ---; tail -c 5000 build.log) 2>&1 )")"
