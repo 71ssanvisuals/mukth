@@ -207,16 +207,16 @@ body:not(.hifz) #fMushaf,body.hifz #fHifz{display:flex}
 </main>
 
 <div class="foot" id="fMushaf">
-  <button class="nv" id="pNext"><svg class="i"><use href="#i-prev"/></svg>التالية</button>
+  <button class="nv" id="pPrev"><svg class="i"><use href="#i-prev"/></svg>السابقة</button>
   <button class="pill" id="pPill"><b id="pNum"></b><small id="pJuz"></small></button>
-  <button class="nv" id="pPrev">السابقة<svg class="i"><use href="#i-next"/></svg></button>
+  <button class="nv" id="pNext">التالية<svg class="i"><use href="#i-next"/></svg></button>
 </div>
 <div class="foot" id="fHifz">
-  <button class="nv pri" id="aNext"><svg class="i"><use href="#i-prev"/></svg>التالية</button>
-  <button class="tl" id="bTest"><span class="c"><svg class="i"><use id="uTest" href="#i-eyeoff"/></svg></span><span id="lTest">اختبار</span></button>
-  <button id="bCount" aria-label="عدّاد التكرار"><svg viewBox="0 0 68 68"><circle class="trk" cx="34" cy="34" r="30"/><circle class="bar" id="ring" cx="34" cy="34" r="30"/></svg><b id="cNum">٠</b><small id="cOf"></small></button>
+  <button class="nv" id="aPrev"><svg class="i"><use href="#i-prev"/></svg>السابقة</button>
   <button class="tl" id="bPlay"><span class="c"><svg class="i"><use id="uPlay" href="#i-play"/></svg></span><span>استماع</span></button>
-  <button class="nv" id="aPrev">السابقة<svg class="i"><use href="#i-next"/></svg></button>
+  <button id="bCount" aria-label="عدّاد التكرار"><svg viewBox="0 0 68 68"><circle class="trk" cx="34" cy="34" r="30"/><circle class="bar" id="ring" cx="34" cy="34" r="30"/></svg><b id="cNum">٠</b><small id="cOf"></small></button>
+  <button class="tl" id="bTest"><span class="c"><svg class="i"><use id="uTest" href="#i-eyeoff"/></svg></span><span id="lTest">اختبار</span></button>
+  <button class="nv pri" id="aNext">التالية<svg class="i"><use href="#i-next"/></svg></button>
 </div>
 
 <!-- الفهرس -->
@@ -242,10 +242,10 @@ body:not(.hifz) #fMushaf,body.hifz #fHifz{display:flex}
   <div class="body">
     <div class="card"><h3>المظهر</h3><div class="opts" id="oTheme"><button data-v="paper">ورقي</button><button data-v="white">أبيض</button><button data-v="night">ليلي</button></div></div>
     <div class="card"><h3>هدف تكرار الآية</h3><div class="opts" id="oGoal"><button data-v="3">٣</button><button data-v="5">٥</button><button data-v="7">٧</button><button data-v="10">١٠</button><button data-v="20">٢٠</button></div></div>
-    <div class="card"><h3>القارئ (يحتاج اتصالًا بالإنترنت)</h3><div class="opts" id="oRec"><button data-v="0">الحصري</button><button data-v="1">المنشاوي</button><button data-v="2">العفاسي</button></div></div>
+    <div class="card"><h3>القارئ (يحتاج اتصالًا بالإنترنت)</h3><div class="opts" id="oRec"><button data-v="0">الحصري</button><button data-v="1">المنشاوي</button><button data-v="2">العفاسي</button><button data-v="3">محمد أيوب</button></div></div>
     <div class="card"><h3>تكرار التلاوة عند الاستماع</h3><div class="opts" id="oLoop"><button data-v="1">مرة</button><button data-v="3">٣</button><button data-v="5">٥</button><button data-v="0">متواصل</button></div></div>
     <div class="card">
-      <div class="brand"><svg><use href="#logo"/></svg><div><div class="nm">مُكْث</div><div class="tg">آيةً آيةً، على مُكْث · الإصدار ١٫١</div></div></div>
+      <div class="brand"><svg><use href="#logo"/></svg><div><div class="nm">مُكْث</div><div class="tg">آيةً آيةً، على مُكْث · الإصدار ١٫٢</div></div></div>
       <p>الاسم من سورة الإسراء (١٠٦) في تفريق القرآن ليُقرأ على الناس <b>على مُكْث</b>، أي على تمهُّل وتثبُّت.</p>
       <p><b>وضع الحفظ:</b> تظهر الآية وحدها في موضعها من صفحة المصحف، ويُحجب ما سواها، فيثبت شكلها ومكانها في الذهن. كرِّرها حتى يكتمل العدّاد، ثم اضغط «اختبار» وسمِّعها والمس الصفحة لتكشف كلمةً كلمة، ثم علِّمها «حفظتُها».</p>
       <p><b>وضع المصحف:</b> صفحات مصحف المدينة النبوية كاملة. المس أي آية لتفتحها في وضع الحفظ. الآيات المحفوظة تظهر بلون مميّز.</p>
@@ -285,7 +285,7 @@ if(!(S.page>=1&&S.page<=NP))S.page=1;
 var mem=new Uint8Array(NA);(function(){for(var i=0;i<S.mem.length&&i<NA;i++)if(S.mem.charCodeAt(i)===49)mem[i]=1})();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function saveMem(){var a=new Array(NA);for(var i=0;i<NA;i++)a[i]=mem[i]?"1":"0";S.mem=a.join("").replace(/0+$/,"");save()}
-var RECITERS=[["الحصري","Husary_128kbps"],["المنشاوي","Minshawy_Murattal_128kbps"],["العفاسي","Alafasy_128kbps"]];
+var RECITERS=[["الحصري","Husary_128kbps"],["المنشاوي","Minshawy_Murattal_128kbps"],["العفاسي","Alafasy_128kbps"],["محمد أيوب","Muhammad_Ayyoub_128kbps"]];
 
 /* ---------- فهارس ---------- */
 function bs(arr,i,key){var lo=0,hi=arr.length-1;while(lo<hi){var m=(lo+hi+1)>>1;if((key?arr[m][2]:arr[m])<=i)lo=m;else hi=m-1}return lo}
